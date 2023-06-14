@@ -6,6 +6,8 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import { Link } from '@mui/material';
+import { NavLink } from 'react-router-dom';
 
 const Header = () => {
   return (
@@ -22,10 +24,20 @@ const Header = () => {
                       >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
-          </Typography>
-          <Button color="inherit">Login</Button>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Link component={NavLink} to='/' color="inherit" underline='none'>
+              HomeNews
+            </Link>
+            </Typography>
+            <Link href='/login' color="inherit">
+              <Button color="inherit">Login</Button>
+            </Link>
+            <Link href='/register' color="inherit">
+              <Button color="inherit">Register</Button>
+            </Link>
+            <Link href='/logout' color="inherit">
+              <Button color="inherit">Logout</Button>
+            </Link>
         </Toolbar>
       </AppBar>
           </Box>
