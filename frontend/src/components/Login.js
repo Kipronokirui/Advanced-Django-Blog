@@ -19,7 +19,7 @@ import axiosInstance from './Axios';
 const defaultTheme = createTheme();
 
 export default function Login() {
-    const history = useNavigate();
+    const navigate = useNavigate();
     const initialFormData = Object.freeze({
 		email: '',
 		password: '',
@@ -45,7 +45,7 @@ export default function Login() {
 				localStorage.setItem('refresh_token', res.data.refresh);
 				axiosInstance.defaults.headers['Authorization'] =
 					'JWT ' + localStorage.getItem('access_token');
-				history.push('/');
+				navigate('/');
 				//console.log(res);
 				//console.log(res.data);
 			});
@@ -79,6 +79,7 @@ export default function Login() {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={handleChange}
             />
             <TextField
               margin="normal"
@@ -89,6 +90,7 @@ export default function Login() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={handleChange}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -99,6 +101,7 @@ export default function Login() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              onClick={handleSubmit}
             >
               Sign In
             </Button>
