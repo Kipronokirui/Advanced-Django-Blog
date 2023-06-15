@@ -1,63 +1,75 @@
-from rest_framework import generics
+from django.shortcuts import get_object_or_404
 from blog.models import Post
 from .serializers import PostSerializer
-from rest_framework.permissions import SAFE_METHODS, IsAuthenticated, IsAuthenticatedOrReadOnly, BasePermission, IsAdminUser, DjangoModelPermissions
-from rest_framework import viewsets
+from rest_framework import viewsets, filters, generics, permissions
 from rest_framework.response import Response
-from rest_framework import filters
-from django.shortcuts import get_object_or_404
+from rest_framework.views import APIView
 
+# Display Posts
 
-class PostUserWritePermission(BasePermission):
-    message = 'Editing posts is restricted to the author only.'
+class PostList(generics.ListAPIView):
 
-    def has_object_permission(self, request, view, obj):
+    serializer_class = PostSerializer
+    queryset = Post.objects.all()
 
-        if request.method in SAFE_METHODS:
-            return True
-
-        return obj.author == request.user
-
-# class PostList(generics.ListCreateAPIView):
-#     queryset = Post.postobjects.all()
-#     serializer_class = PostSerializer
-
-class PostList(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+class PostDetail(generics.RetrieveAPIView):
     serializer_class = PostSerializer
 
     def get_object(self, queryset=None, **kwargs):
         item = self.kwargs.get('pk')
         return get_object_or_404(Post, slug=item)
 
-    # Define Custom Queryset
-    def get_queryset(self):
-        return Post.objects.all()
+# Post Search
 
+class PostListDetailFilter(generics.ListAPIView):
+  
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    filter_backends = [filters.SearchFilter]
+    # '^' Starts-with search.
+    # '=' Exact matches.
+    search_fields = ['^slug']
 
-# class PostDetail(generics.RetrieveUpdateDestroyAPIView, PostUserWritePermission):
-#     permission_classes = [PostUserWritePermission]
-#     queryset = Post.objects.all()
-#     serializer_class = PostSerializer
+# Post Admin
 
+class CreatePost(generics.CreateAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+class AdminPostDetail(generics.RetrieveAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+class EditPost(generics.UpdateAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = PostSerializer
+    queryset = Post.objects.all()
+
+class DeletePost(generics.RetrieveDestroyAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = PostSerializer
+    queryset = Post.objects.all()
+    
 
 """ Concrete View Classes
-#CreateAPIView
+# CreateAPIView
 Used for create-only endpoints.
-#ListAPIView
+# ListAPIView
 Used for read-only endpoints to represent a collection of model instances.
-#RetrieveAPIView
+# RetrieveAPIView
 Used for read-only endpoints to represent a single model instance.
-#DestroyAPIView
+# DestroyAPIView
 Used for delete-only endpoints for a single model instance.
-#UpdateAPIView
+# UpdateAPIView
 Used for update-only endpoints for a single model instance.
-##ListCreateAPIView
+# ListCreateAPIView
 Used for read-write endpoints to represent a collection of model instances.
 RetrieveUpdateAPIView
 Used for read or update endpoints to represent a single model instance.
-#RetrieveDestroyAPIView
+# RetrieveDestroyAPIView
 Used for read or delete endpoints to represent a single model instance.
-#RetrieveUpdateDestroyAPIView
+# RetrieveUpdateDestroyAPIView
 Used for read-write-delete endpoints to represent a single model instance.
 """

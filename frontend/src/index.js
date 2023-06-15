@@ -10,6 +10,12 @@ import Register from './components/Register';
 import Login from './components/Login';
 import Logout from './components/Logout';
 import PostDetail from './components/PostDetail';
+import Search from './components/Search';
+import Create from './components/admin/Create';
+import Edit from './components/admin/Edit';
+// import AllPosts from './components/admin/AllPosts'
+import Delete from './components/admin/Delete'
+import Admin from './Admin';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -21,6 +27,11 @@ root.render(
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/post/:slug" element={<PostDetail />} />
+        <Route path="/search" component={Search} />
+        <Route exact path="/admin" component={Admin} />
+        <Route exact path="/admin/create" component={Create} />
+        <Route exact path="/admin/edit/:id" component={Edit} />
+        <Route exact path="/admin/delete/:id" component={Delete} />
       </Routes>
     <Footer />
   </BrowserRouter>
