@@ -9,6 +9,7 @@ import Footer from './components/Footer';
 import Register from './components/Register';
 import Login from './components/Login';
 import Logout from './components/Logout';
+import PostDetail from './components/PostDetail';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -16,9 +17,10 @@ root.render(
     <Header />
       <Routes>
         <Route exact path="/" element={<App />} />
-        <Route exact path="/register" element={<Register />} />
-        <Route exact path="/login" element={<Login />} />
-        <Route exact path="/logout" element={<Logout />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/logout" element={<Logout />} />
+        <Route path="/post/:slug" element={<PostDetail />} />
       </Routes>
     <Footer />
   </BrowserRouter>

@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import { Typography, Grid, Container} from '@mui/material';
+import { Typography, Grid, Container, Link} from '@mui/material';
 
 const useStyles = () => ({
 
@@ -20,22 +20,28 @@ const Posts = (props) => {
 						return (
 							// Enterprise card is full width at sm breakpoint
 							<Grid item key={post.id} xs={12} md={4}>
-								<Card sx={{ maxWidth: 345 }}>
-									<CardMedia
-										component="img"
-										alt="green iguana"
-										height="140"
-										image="https://source.unsplash.com/random"
-									/>
-									<CardContent>
-										<Typography gutterBottom variant="h5" component="div">
-											{post.title.substr(0, 50)}...
-										</Typography>
-										<Typography variant="body2" color="text.secondary">
-											{post.excerpt.substr(0, 60)}...
-										</Typography>
-									</CardContent>
-								</Card>
+								<Link
+										color="textPrimary"
+										href={'post/' + post.slug}
+										className={classes.link}
+									>
+									<Card sx={{ maxWidth: 345 }}>
+										<CardMedia
+											component="img"
+											alt="green iguana"
+											height="140"
+											image="https://source.unsplash.com/random"
+										/>
+										<CardContent>
+											<Typography gutterBottom variant="h5" component="div">
+												{post.title.substr(0, 50)}...
+											</Typography>
+											<Typography variant="body2" color="text.secondary">
+												{post.excerpt.substr(0, 60)}...
+											</Typography>
+										</CardContent>
+									</Card>
+								</Link>
 							</Grid>
 						);
 					})}
