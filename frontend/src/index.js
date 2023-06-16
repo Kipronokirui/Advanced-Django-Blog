@@ -27,11 +27,11 @@ root.render(
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/post/:slug" element={<PostDetail />} />
-        <Route path="/search" component={Search} />
-        <Route exact path="/admin" component={Admin} />
-        <Route exact path="/admin/create" component={Create} />
-        <Route exact path="/admin/edit/:id" component={Edit} />
-        <Route exact path="/admin/delete/:id" component={Delete} />
+        <Route path="/search" element={<Search />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin/create" element={<Create />} />
+        <Route path="/admin/edit/:id" element={<Edit />} />
+        <Route path="/admin/delete/:id" element={<Delete />} />
       </Routes>
     <Footer />
   </BrowserRouter>
