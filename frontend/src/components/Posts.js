@@ -30,7 +30,7 @@ const Posts = (props) => {
 											component="img"
 											alt="green iguana"
 											height="140"
-											image="https://source.unsplash.com/random"
+											image={post.image}
 										/>
 										<CardContent>
 											<Typography gutterBottom variant="h5" component="div">
