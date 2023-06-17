@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from './Axios';
+import axiosInstance from './axios/login';
 
 
 const defaultTheme = createTheme();
@@ -36,18 +36,16 @@ export default function Login() {
 		console.log(formData);
 
 		axiosInstance
-			.post(`token/`, {
-				email: formData.email,
-				password: formData.password,
+      .post(`auth/token/`, {
+        grant_type: 'password',
+				username: formData.email,
+        password: formData.password,
+        client_id: 'ogA3QiyoyyhCWuNhNjIkn49NklLKI9xKU5O5yO6n',
+        client_secret:'pbkdf2_sha256$260000$Jhbl1a8wtFCD2slGppFIXp$P9QQNhae83rd0/BtLm36cFdEORQKPoTUaVUX1pLmzlE='
 			})
 			.then((res) => {
-				localStorage.setItem('access_token', res.data.access);
-				localStorage.setItem('refresh_token', res.data.refresh);
-				axiosInstance.defaults.headers['Authorization'] =
-					'JWT ' + localStorage.getItem('access_token');
-				navigate('/');
-				//console.log(res);
-				//console.log(res.data);
+				localStorage.setItem('access_token', res.data.access_token);
+				localStorage.setItem('refresh_token', res.data.refresh_token);
 			});
 	};
 
